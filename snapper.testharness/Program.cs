@@ -18,6 +18,7 @@ namespace snapper.testharness
                 RootFolderPath = ConfigurationManager.AppSettings["RootFolderPath"],
                 UsernamePattern = ConfigurationManager.AppSettings["UsernamePattern"],
                 KeystrokeDelayMilliseconds = int.Parse(ConfigurationManager.AppSettings["KeystrokeDelayMilliseconds"]),
+                MaxDiskSpaceMB = int.Parse(ConfigurationManager.AppSettings["MaxDiskSpaceMB"]),
                 Debug = true
             };
             Console.WriteLine("Constructing processor...");

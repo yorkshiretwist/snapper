@@ -31,7 +31,8 @@ namespace snapper.app
                 PauseSeconds = int.Parse(ConfigurationManager.AppSettings["PauseSeconds"]),
                 RootFolderPath = ConfigurationManager.AppSettings["RootFolderPath"],
                 UsernamePattern = ConfigurationManager.AppSettings["UsernamePattern"],
-                KeystrokeDelayMilliseconds = int.Parse(ConfigurationManager.AppSettings["KeystrokeDelayMilliseconds"])
+                KeystrokeDelayMilliseconds = int.Parse(ConfigurationManager.AppSettings["KeystrokeDelayMilliseconds"]),
+                MaxDiskSpaceMB = int.Parse(ConfigurationManager.AppSettings["MaxDiskSpaceMB"])
             };
             var processor = new Processor();
             Task.Run(() => processor.Start(config));

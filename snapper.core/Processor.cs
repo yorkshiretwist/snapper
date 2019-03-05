@@ -87,8 +87,24 @@ namespace snapper.core
                     Debug(ex.ToString());
                 }
                 Thread.Sleep(config.PauseSeconds * 1000);
+                if (i % 10 == 0)
+                {
+                    CheckDiskUsage(config);
+                }
                 i++;
             }
+        }
+
+        private void CheckDiskUsage(ProcessorConfig config)
+        {
+            long length = Directory.GetFiles(config.RootFolderPath, "*", SearchOption.AllDirectories).Sum(t => (new FileInfo(t).Length));
+            var lengthMB = (double)length / 1024 / 1024;
+            if (lengthMB < config.MaxDiskSpaceMB)
+            {
+                return;
+            }
+            var dirNames = Directory.GetDirectories(config.RootFolderPath);
+            Directory.Delete(dirNames.OrderBy(d => d).First(), true);
         }
 
         private void SetupKeyboardHooks()
@@ -199,7 +215,7 @@ namespace snapper.core
 
                 if (_lastBitmap == null || !CompareBitmapsFast(_lastBitmap, bmpScreenCapture))
                 {
-                    var fileName = $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.png";
+                    var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
                     bmpScreenCapture.Save($"{_logFolder}/{fileName}", ImageFormat.Png);
                     _lastBitmap = bmpScreenCapture.Clone(new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height), bmpScreenCapture.PixelFormat);
                     Debug($"Captured screenshot {fileName}");
