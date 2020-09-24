@@ -13,5 +13,7 @@
         public string UsernamePattern { get; set; }
 
         public bool Debug { get; set; }
+
+        public bool TryToSaveSpace { get; set; } = false;
     }
 }

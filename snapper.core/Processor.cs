@@ -213,7 +213,7 @@ namespace snapper.core
                                  bmpScreenCapture.Size,
                                  CopyPixelOperation.SourceCopy);
 
-                if (_lastBitmap == null || !CompareBitmapsFast(_lastBitmap, bmpScreenCapture))
+                if (!_config.TryToSaveSpace || (_lastBitmap == null || !CompareBitmapsFast(_lastBitmap, bmpScreenCapture)))
                 {
                     var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
                     bmpScreenCapture.Save($"{_logFolder}/{fileName}", ImageFormat.Png);
